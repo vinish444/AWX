@@ -1,0 +1,7 @@
+---
+- name: Ping Ubuntu machine
+  hosts: ubuntu
+  gather_facts: no
+  tasks:
+    - name: Ping the host
+      ping:
