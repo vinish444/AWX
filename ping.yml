@@ -1,7 +1,6 @@
 ---
-- name: Test SSH Access
+- name: Ping the host in the ubuntu group
   hosts: ubuntu
-  gather_facts: no
   tasks:
-    - name: Test SSH connection
-      ping:
+    - name: Ping the host 11.0.0.100
+      ansible.builtin.ping:
