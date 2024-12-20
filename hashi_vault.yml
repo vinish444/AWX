@@ -1,0 +1,7 @@
+---
+- name: Test Vault Secret
+  hosts: localhost
+  tasks:
+    - name: Fetch secret from Vault
+      debug:
+        msg: "{{ lookup('community.hashi_vault.hashi_vault', 'my_secret/credentials') }}"
