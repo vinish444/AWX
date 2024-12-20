@@ -1,6 +1,12 @@
 ---
-- name: Ping the host in the ubuntu group
+- name: SSH into host and run pwd command
   hosts: ubuntu
+  gather_facts: no
   tasks:
-    - name: Ping the host 11.0.0.100
-      ansible.builtin.ping:
+    - name: Run pwd command
+      command: pwd
+      register: result
+
+    - name: Display the output of pwd
+      debug:
+        msg: "The current working directory is: {{ result.stdout }}"
