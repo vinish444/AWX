@@ -1,6 +1,6 @@
 ---
 - name: Test SSH Access
-  hosts: 11.0.0.100
+  hosts: ubuntu
   gather_facts: no
   tasks:
     - name: Test SSH connection
