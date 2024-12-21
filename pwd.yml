@@ -4,7 +4,7 @@
   vars:
     ssh_user: "vinish"
     ssh_password: "ICICI1@src"
-    sudo_password: "ICICI1@src"  # Replace with the sudo password for the user
+    sudo_password: "your_sudo_password_here"  # Replace with the sudo password for the user
 
   tasks:
     - name: Display SSH credentials
@@ -20,4 +20,9 @@
       vars:
         ansible_user: "{{ ssh_user }}"
         ansible_ssh_pass: "{{ ssh_password }}"
-        ansible_become_password: "{{ sudo_password }}"  # Correctly define sudo password in vars
+        ansible_become_password: "{{ sudo_password }}"
+      register: hostname_result
+
+    - name: Display the hostname command output
+      ansible.builtin.debug:
+        msg: "The output of the hostname command is: {{ hostname_result.stdout }}"
