@@ -6,17 +6,17 @@
       ansible.builtin.debug:
         msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
 
-    - name: Run a simple command (e.g., hostname)
+    - name: Run a simple command
       ansible.builtin.command:
-        cmd: hostname
+        cmd: pwd
       become: yes
       become_method: sudo
-      become_password: "{{ sudo_password }}"  # Provide the sudo password here
       vars:
         ansible_user: "{{ ssh_user }}"
         ansible_ssh_pass: "{{ ssh_password }}"
+      become_password: "{{ sudo_password }}"  # Provide sudo password here
 
   vars:
     ssh_user: "vinish"
     ssh_password: "ICICI1@src"
-    sudo_password: "your_sudo_password_here"  # Replace with the sudo password for the user
+    sudo_password: "ICICI1@src"  # Replace with the sudo password for the user
