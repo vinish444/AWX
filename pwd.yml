@@ -1,9 +1,21 @@
 ---
-- name: Use credentials from inventory for password on Ubuntu machines
-  hosts: ubuntu
+- name: Use hardcoded credentials to connect to 11.0.0.150
+  hosts: 11.0.0.150
   gather_facts: no
-
   tasks:
-    - name: Display the password (or use it in other tasks)
+    - name: Display SSH credentials
       ansible.builtin.debug:
-        msg: "The SSH password from the inventory is {{ ansible_ssh_pass }}"
+        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
+
+    - name: Run a simple command (e.g., hostname)
+      ansible.builtin.command:
+        cmd: hostname
+      become: yes
+      become_method: sudo
+      vars:
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+
+  vars:
+    ssh_user: "vinish"      # Replace with the SSH username
+    ssh_password: "ICICI1@src"  # Replace with the SSH password
