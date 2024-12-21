@@ -13,7 +13,7 @@
 
     - name: Run a simple command (e.g., hostname)
       ansible.builtin.command:
-        cmd: hostname
+        cmd: pwd
       become: yes
       become_method: sudo
       become_user: root
@@ -25,4 +25,4 @@
 
     - name: Display the hostname command output
       ansible.builtin.debug:
-        msg: "The output of the hostname command is: {{ hostname_result.stdout }}"
+        msg: "The output of the command is: {{ hostname_result.stdout }}"
