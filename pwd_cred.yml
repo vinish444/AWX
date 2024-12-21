@@ -13,6 +13,10 @@
       become: yes
       become_method: sudo
       become_user: root
+      vars:
+        ansible_user: "{{ ssh_user }}"  # This will be provided by the local_cred
+        ansible_ssh_pass: "{{ ssh_password }}"  # This will be provided by the local_cred
+        ansible_become_password: "{{ sudo_password }}"  # This will be provided by the sudo_cred
       register: hostname_result
 
     - name: Display the hostname command output
