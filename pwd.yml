@@ -11,12 +11,12 @@
         cmd: hostname
       become: yes
       become_method: sudo
-      become_password: "{{ sudo_password }}"
+      become_password: "{{ sudo_password }}"  # Provide the sudo password here
       vars:
         ansible_user: "{{ ssh_user }}"
         ansible_ssh_pass: "{{ ssh_password }}"
-        sudo_password: "your_sudo_password_here"   # Add the sudo password here
 
   vars:
     ssh_user: "vinish"
     ssh_password: "ICICI1@src"
+    sudo_password: "your_sudo_password_here"  # Replace with the sudo password for the user
