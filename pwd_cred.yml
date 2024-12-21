@@ -1,0 +1,23 @@
+- name: Use AWX credentials to connect to 11.0.0.150
+  hosts: 11.0.0.150
+  gather_facts: no
+  tasks:
+    - name: Display SSH credentials
+      ansible.builtin.debug:
+        msg: "Using SSH with username {{ ansible_ssh_user }} and password {{ ansible_ssh_pass }}"
+
+    - name: Run a simple command (e.g., hostname)
+      ansible.builtin.command:
+        cmd: hostname
+      become: yes
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_ssh_user: "{{ lookup('env', 'ANSIBLE_SSH_USER') }}"
+        ansible_ssh_pass: "{{ lookup('env', 'ANSIBLE_SSH_PASS') }}"
+        ansible_become_password: "{{ lookup('env', 'ANSIBLE_SUDO_PASSWORD') }}"
+      register: hostname_result
+
+    - name: Display the hostname command output
+      ansible.builtin.debug:
+        msg: "The output of the hostname command is: {{ hostname_result.stdout }}"
