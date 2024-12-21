@@ -4,7 +4,7 @@
   vars:
     ssh_user: "vinish"
     ssh_password: "ICICI1@src"
-    sudo_password: "your_sudo_password_here"  # Replace with the sudo password for the user
+    sudo_password: "ICICI1@src"  # Replace with the sudo password for the user
 
   tasks:
     - name: Display SSH credentials
