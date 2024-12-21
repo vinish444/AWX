@@ -1,0 +1,28 @@
+- name: Use hardcoded credentials to connect to 11.0.0.150
+  hosts: ubuntu
+  gather_facts: no
+  vars:
+    ssh_user: "vinish"
+    ssh_password: "ICICI1@src"
+    sudo_password: "your_sudo_password_here"  # Replace with the sudo password for the user
+
+  tasks:
+    - name: Display SSH credentials
+      ansible.builtin.debug:
+        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
+
+    - name: Run a simple command (e.g., hostname)
+      ansible.builtin.command:
+        cmd: hostname
+      become: yes
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+        ansible_become_password: "{{ sudo_password }}"
+      register: hostname_result
+
+    - name: Display the hostname command output
+      ansible.builtin.debug:
+        msg: "The output of the hostname command is: {{ hostname_result.stdout }}"
