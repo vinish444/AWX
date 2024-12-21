@@ -3,10 +3,12 @@
   hosts: ubuntu
   gather_facts: no
 
+  vars_prompt:
+    - name: password
+      prompt: "Enter the password"
+      private: yes
+
   tasks:
-    - name: Prompt for password input
-      ansible.builtin.shell: echo "Your password is {{ password }}"
-      vars_prompt:
-        - name: password
-          prompt: "Enter the password"
-          private: yes
+    - name: Display the password (or use it in other tasks)
+      ansible.builtin.debug:
+        msg: "The entered password is {{ password }}"
