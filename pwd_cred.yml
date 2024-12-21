@@ -11,7 +11,7 @@
         cmd: hostname
       become: yes
       become_method: sudo
-      become_user: root
+      become_user: vinish
       vars:
         ansible_ssh_user: "{{ lookup('env', 'ANSIBLE_SSH_USER') }}"
         ansible_ssh_pass: "{{ lookup('env', 'ANSIBLE_SSH_PASS') }}"
