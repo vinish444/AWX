@@ -1,14 +1,9 @@
 ---
-- name: Prompt for password on Ubuntu machines
+- name: Use credentials from inventory for password on Ubuntu machines
   hosts: ubuntu
   gather_facts: no
-
-  vars_prompt:
-    - name: password
-      prompt: "Enter the password"
-      private: yes
 
   tasks:
     - name: Display the password (or use it in other tasks)
       ansible.builtin.debug:
-        msg: "The entered password is {{ password }}"
+        msg: "The SSH password from the inventory is {{ ansible_ssh_pass }}"
