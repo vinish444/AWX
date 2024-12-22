@@ -1,5 +1,5 @@
 - name: Use hardcoded credentials to connect to 11.0.0.150
-  hosts: 11.0.0.150
+  hosts: all
   gather_facts: no
   vars:
     ssh_user: "vinish"
