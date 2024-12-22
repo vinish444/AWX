@@ -11,10 +11,10 @@
       debug:
         var: vault_data  # Prints the entire JSON response from Vault
 
-    - name: Set SSH user and password from Vault
+    - name: Extract SSH user and password from Vault
       set_fact:
-        ssh_user: "{{ vault_data.data.username }}"
-        ssh_password: "{{ vault_data.data.password }}"
+        ssh_user: "{{ vault_data.data.keys() | first }}"  # Extract the key name (e.g., 'vinish')
+        ssh_password: "{{ vault_data.data[ssh_user] }}"   # Extract the value (e.g., the password)
 
     - name: Debug SSH user
       debug:
