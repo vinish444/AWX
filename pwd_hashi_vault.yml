@@ -4,7 +4,7 @@
   tasks:
     - name: Retrieve SSH credentials from HashiCorp Vault
       hashivault_read:
-        secret: "credential"
+        secret: "secret/credential"
       register: vault_data
 
     - name: Debug Vault JSON response
