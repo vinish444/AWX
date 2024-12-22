@@ -1,7 +1,4 @@
 all:
   hosts:
-    11.0.0.150:
+    linux-machine:
       ansible_host: 11.0.0.150
-  vars:
-    ansible_ssh_user: "vinish"
-    ansible_ssh_pass: "ICICI1@src"
