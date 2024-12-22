@@ -1,5 +1,4 @@
 all:
   hosts:
     host1:
-      ansible_host: 11.0.0.100
-      ansible_user: ubuntu
+      ansible_host: 11.0.0.150
