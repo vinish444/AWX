@@ -1,20 +1,28 @@
-- name: Retrieve SSH credentials from HashiCorp Vault
+- name: Use AWX credentials to connect to 11.0.0.150
   hosts: all
   gather_facts: no
   tasks:
-    - name: Retrieve SSH credentials
+    - name: Retrieve SSH credentials from HashiCorp Vault
       hashivault_read:
-        secret: "secret/credential"  # Update the path here
+        secret: "secret/credential"
       register: vault_data
+
+    - name: Debug Vault JSON response
+      debug:
+        var: vault_data  # Prints the entire JSON response from Vault
 
     - name: Set SSH user and password from Vault
       set_fact:
-        ssh_user: "{{ vault_data.data.username }}"  # Ensure this matches your Vault key structure
+        ssh_user: "{{ vault_data.data.username }}"
         ssh_password: "{{ vault_data.data.password }}"
 
-    - name: Display SSH credentials
+    - name: Debug SSH user
       debug:
-        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
+        msg: "SSH User: {{ ssh_user }}"
+
+    - name: Debug SSH password
+      debug:
+        msg: "SSH Password: {{ ssh_password }}"
 
     - name: Run a simple command (e.g., pwd)
       ansible.builtin.command:
