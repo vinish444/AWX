@@ -1,4 +1,6 @@
 all:
-  hosts_grp1:
-    linux-machine:
-      ansible_host: 11.0.0.150
+  children:
+    hosts_grp1:
+      hosts:
+        linux-machine:
+          ansible_host: 11.0.0.150
