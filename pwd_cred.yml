@@ -1,22 +1,25 @@
----
-- name: Use AWX credentials to connect to 11.0.0.150
+- name: Use credentials from a vault file to connect to 11.0.0.150
   hosts: 11.0.0.150
   gather_facts: no
+
+  vars_files:
+    - credentials.yml  # Load variables from the encrypted vault file
+
   tasks:
     - name: Display SSH credentials
       ansible.builtin.debug:
-        msg: "Using SSH with username {{ ansible_user }} and password {{ ansible_ssh_pass }}"
+        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
 
     - name: Run a simple command (e.g., hostname)
       ansible.builtin.command:
         cmd: hostname
       become: yes
       become_method: sudo
-      become_user: ansible_user
+      become_user: root
       vars:
-        ansible_user: "{{ ssh_user }}"  # This will be provided by the local_cred
-        ansible_ssh_pass: "{{ ssh_password }}"  # This will be provided by the local_cred
-        ansible_become_password: "{{ sudo_password }}"  # This will be provided by the sudo_cred
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+        ansible_become_password: "{{ sudo_password }}"
       register: hostname_result
 
     - name: Display the hostname command output
