@@ -1,0 +1,29 @@
+- name: Retrieve SSH credentials from HashiCorp Vault
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Retrieve SSH credentials
+      hashivault_read:
+        secret: "secret/credential"  # Update the path here
+      register: vault_data
+
+    - name: Set SSH user and password from Vault
+      set_fact:
+        ssh_user: "{{ vault_data.data.username }}"  # Ensure this matches your Vault key structure
+        ssh_password: "{{ vault_data.data.password }}"
+
+    - name: Display SSH credentials
+      debug:
+        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
+
+    - name: Run a simple command (e.g., pwd)
+      ansible.builtin.command:
+        cmd: pwd
+      vars:
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+      register: pwd_result
+
+    - name: Display the pwd command output
+      debug:
+        msg: "The output of the command is: {{ pwd_result.stdout }}"
