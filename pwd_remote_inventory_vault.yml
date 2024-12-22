@@ -1,5 +1,5 @@
 - name: Use credentials from a vault file to connect to 11.0.0.150
-  hosts: hosts
+  hosts: all
   gather_facts: no
 
   vars_files:
