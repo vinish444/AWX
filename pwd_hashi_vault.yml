@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - name: Retrieve SSH credentials from HashiCorp Vault
-      hashivault_read:
+      community.hashi_vault.hashivault_read:
         secret: "secret/credential"
       register: vault_data
 
