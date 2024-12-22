@@ -1,18 +1,14 @@
-- name: Use hardcoded credentials to connect to 11.0.0.150
+- name: Use AWX credentials to connect to 11.0.0.150
   hosts: all
   gather_facts: no
-
   tasks:
     - name: Display SSH credentials
       ansible.builtin.debug:
-        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
+        msg: "Using SSH with username {{ ansible_user }} and password {{ ansible_ssh_pass }}"
 
     - name: Run a simple command (e.g., pwd)
       ansible.builtin.command:
         cmd: pwd
-      vars:
-        ansible_user: "{{ ssh_user }}"
-        ansible_ssh_pass: "{{ ssh_password | quote }}"  # Ensure password is quoted
       register: pwd_result
 
     - name: Display the pwd command output
