@@ -1,0 +1,23 @@
+- name: Use hardcoded credentials to connect to 11.0.0.150
+  hosts: 11.0.0.150
+  gather_facts: no
+  vars:
+    ssh_user: "vinish"
+    ssh_password: "password@123"
+
+  tasks:
+    - name: Display SSH credentials
+      ansible.builtin.debug:
+        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
+
+    - name: Run a simple command (e.g., pwd)
+      ansible.builtin.command:
+        cmd: pwd
+      vars:
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+      register: pwd_result
+
+    - name: Display the pwd command output
+      ansible.builtin.debug:
+        msg: "The output of the command is: {{ pwd_result.stdout }}"
