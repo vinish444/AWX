@@ -3,7 +3,7 @@
   gather_facts: no
   vars:
     ssh_user: "vinish"
-    ssh_password: "password@123"
+    ssh_password: "ICICI1@src"
 
   tasks:
     - name: Display SSH credentials
