@@ -12,7 +12,7 @@
         cmd: hostname
       become: yes
       become_method: sudo
-      become_user: root
+      become_user: ansible_user
       vars:
         ansible_user: "{{ ssh_user }}"  # This will be provided by the local_cred
         ansible_ssh_pass: "{{ ssh_password }}"  # This will be provided by the local_cred
