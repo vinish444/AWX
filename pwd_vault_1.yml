@@ -4,7 +4,7 @@
   tasks:
     - name: Get SSH credentials from Vault
       ansible.builtin.uri:
-        url: "http://11.0.0.1:8080/v1/secret/data/credential"  # Replace with your Vault URL and secret path
+        url: "http://11.0.0.1:8080/v1/secret/data/credentials"  # Replace with your Vault URL and secret path
         method: GET
         headers:
           X-Vault-Token: "root"  # Hardcoded Vault token
