@@ -1,5 +1,5 @@
 - name: Retrieve SSH credentials from HashiCorp Vault using ansible.builtin.uri
-  hosts: localhost
+  hosts: ubuntu
   gather_facts: no
   tasks:
     - name: Get SSH credentials from Vault
