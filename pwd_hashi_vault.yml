@@ -1,5 +1,5 @@
 - name: Use AWX credentials to connect to 11.0.0.150
-  hosts: all
+  hosts: ubuntu
   gather_facts: no
   tasks:
     - name: Retrieve SSH credentials from HashiCorp Vault
