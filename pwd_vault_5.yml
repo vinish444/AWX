@@ -1,35 +1,29 @@
 - name: Retrieve SSH credentials from HashiCorp Vault using community.hashi_vault.vault_kv2_get
-  hosts: hosts_grp1
+  hosts: localhost  # Run on the control node
   gather_facts: no
   tasks:
     - name: Get SSH credentials from Vault
       community.hashi_vault.vault_kv2_get:
-        url: "http://11.0.0.1:8080"  # Optional if Vault URL is already in the credential
-        path: "credentials"  # The correct path to your secret
+        url: "http://11.0.0.1:8080"  # Replace with the correct Vault URL
+        path: "credentials"          # Replace with the correct secret path
       register: vault_response
-
-    - name: Debug Vault response
-      debug:
-        var: vault_response
 
     - name: Extract SSH user and password from Vault response
       set_fact:
-        ssh_user: "{{ vault_response.data.data.ssh_user }}"  # Correct path to the username in the response
-        ssh_password: "{{ vault_response.data.data.ssh_password }}"  # Correct path to the password in the response
+        ssh_user: "{{ vault_response.data.data.ssh_user }}"
+        ssh_password: "{{ vault_response.data.data.ssh_password }}"
         sudo_password: "{{ vault_response.data.data.sudo_password }}"
 
-    - name: Debug SSH user
+    - name: Debug SSH credentials
       debug:
-        msg: "SSH User: {{ ssh_user }}"
+        msg:
+          - "SSH User: {{ ssh_user }}"
+          - "SSH Password: {{ ssh_password }}"
 
-    - name: Debug SSH password
-      debug:
-        msg: "SSH Password: {{ ssh_password }}"
-
-    - name: Display SSH credentials
-      ansible.builtin.debug:
-        msg: "Using SSH with username {{ ssh_user }} and password {{ ssh_password }}"
-
+- name: Execute commands on target hosts
+  hosts: hosts_grp1
+  gather_facts: no
+  tasks:
     - name: Run a simple command (e.g., pwd)
       ansible.builtin.command:
         cmd: pwd
