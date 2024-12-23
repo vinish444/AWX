@@ -16,6 +16,7 @@
       set_fact:
         ssh_user: "{{ vault_response.data.data.ssh_user }}"  # Correct path to the username in the response
         ssh_password: "{{ vault_response.data.data.ssh_password }}"  # Correct path to the password in the response
+        sudo_password: "{{ vault_response.data.data.sudo_password }}"
 
     - name: Debug SSH user
       debug:
