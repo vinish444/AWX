@@ -1,4 +1,4 @@
-- name: Retrieve SSH credentials from HashiCorp Vault using community.hashi_vault.vault_kv2_get
+- name: Retrieve SSH credentials from HashiCorp Vault
   hosts: localhost  # Run on the control node
   gather_facts: no
   tasks:
@@ -20,24 +20,28 @@
           - "SSH User: {{ ssh_user }}"
           - "SSH Password: {{ ssh_password }}"
           - "Sudo Password: {{ sudo_password }}"
+
+- name: Execute commands on target hosts
+  hosts: hosts_grp1
+  gather_facts: no
+  vars:
+    ssh_user: "{{ hostvars['localhost']['ssh_user'] }}"  # Retrieve from localhost facts
+    ssh_password: "{{ hostvars['localhost']['ssh_password'] }}"  # Retrieve from localhost facts
   tasks:
-    - name: Execute commands on target hosts
-      hosts: hosts_grp1
-      gather_facts: no
-      tasks:
-        - name: debug ssh user and password
-          debug:
-            msg:
-              - "{{ ssh_user }}"
-              - "{{ ssh_password }}"
-        - name: Run a simple command (e.g., pwd)
-          ansible.builtin.command:
-            cmd: pwd
-          vars:
-            ansible_user: "{{ ssh_user }}"
-            ansible_ssh_pass: "{{ ssh_password }}"  # Ensure password is quoted
-          register: pwd_result
-    
-        - name: Display the pwd command output
-          ansible.builtin.debug:
-            msg: "The output of the command is: {{ pwd_result.stdout }}"
+    - name: Debug SSH user and password
+      debug:
+        msg:
+          - "SSH User: {{ ssh_user }}"
+          - "SSH Password: {{ ssh_password }}"
+
+    - name: Run a simple command (e.g., pwd)
+      ansible.builtin.command:
+        cmd: pwd
+      vars:
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+      register: pwd_result
+
+    - name: Display the pwd command output
+      ansible.builtin.debug:
+        msg: "The output of the command is: {{ pwd_result.stdout }}"
