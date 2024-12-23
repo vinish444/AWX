@@ -1,5 +1,5 @@
 - name: Retrieve SSH credentials from HashiCorp Vault using community.hashi_vault.vault_kv2_get
-  hosts: localhost
+  hosts: all
   gather_facts: no
   tasks:
     - name: Get SSH credentials from Vault
