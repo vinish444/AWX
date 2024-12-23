@@ -25,6 +25,11 @@
   hosts: hosts_grp1
   gather_facts: no
   tasks:
+    - name: debug ssh user and password
+      debug:
+        msg:
+          - "{{ ssh_user }}"
+          - "{{ ssh_password }}"
     - name: Run a simple command (e.g., pwd)
       ansible.builtin.command:
         cmd: pwd
