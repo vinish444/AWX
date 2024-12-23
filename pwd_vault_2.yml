@@ -5,7 +5,7 @@
     - name: Get SSH credentials from Vault
       community.hashi_vault.vault_kv2_get:
         url: "http://11.0.0.1:8080"
-        path: "secret/credentials"  # Correct path to the secret
+        path: "credentials"  # Correct path to the secret
         token: "root"  # Vault token
       register: vault_response
 
