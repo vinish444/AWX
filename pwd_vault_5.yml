@@ -19,6 +19,7 @@
         msg:
           - "SSH User: {{ ssh_user }}"
           - "SSH Password: {{ ssh_password }}"
+          - "Sudo Password: {{ sudo_password }}"
 
 - name: Execute commands on target hosts
   hosts: hosts_grp1
@@ -29,7 +30,7 @@
         cmd: pwd
       vars:
         ansible_user: "{{ ssh_user }}"
-        ansible_ssh_pass: "{{ ssh_password | quote }}"  # Ensure password is quoted
+        ansible_ssh_pass: "{{ ssh_password }}"  # Ensure password is quoted
       register: pwd_result
 
     - name: Display the pwd command output
