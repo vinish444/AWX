@@ -20,24 +20,24 @@
           - "SSH User: {{ ssh_user }}"
           - "SSH Password: {{ ssh_password }}"
           - "Sudo Password: {{ sudo_password }}"
-
-- name: Execute commands on target hosts
-  hosts: hosts_grp1
-  gather_facts: no
   tasks:
-    - name: debug ssh user and password
-      debug:
-        msg:
-          - "{{ ssh_user }}"
-          - "{{ ssh_password }}"
-    - name: Run a simple command (e.g., pwd)
-      ansible.builtin.command:
-        cmd: pwd
-      vars:
-        ansible_user: "{{ ssh_user }}"
-        ansible_ssh_pass: "{{ ssh_password }}"  # Ensure password is quoted
-      register: pwd_result
-
-    - name: Display the pwd command output
-      ansible.builtin.debug:
-        msg: "The output of the command is: {{ pwd_result.stdout }}"
+    - name: Execute commands on target hosts
+      hosts: hosts_grp1
+      gather_facts: no
+      tasks:
+        - name: debug ssh user and password
+          debug:
+            msg:
+              - "{{ ssh_user }}"
+              - "{{ ssh_password }}"
+        - name: Run a simple command (e.g., pwd)
+          ansible.builtin.command:
+            cmd: pwd
+          vars:
+            ansible_user: "{{ ssh_user }}"
+            ansible_ssh_pass: "{{ ssh_password }}"  # Ensure password is quoted
+          register: pwd_result
+    
+        - name: Display the pwd command output
+          ansible.builtin.debug:
+            msg: "The output of the command is: {{ pwd_result.stdout }}"
