@@ -1,0 +1,46 @@
+- name: Retrieve SSH credentials from HashiCorp Vault
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Get SSH credentials from Vault
+      community.hashi_vault.vault_kv2_get:
+        path: "credentials"  # Replace with the correct secret path
+      register: vault_response
+
+    - name: Extract SSH user and password from Vault response
+      set_fact:
+        ssh_user: "{{ vault_response.data.data.ssh_user }}"
+        ssh_password: "{{ vault_response.data.data.ssh_password }}"
+        sudo_password: "{{ vault_response.data.data.sudo_password }}"
+
+    - name: Debug SSH credentials
+      debug:
+        msg:
+          - "SSH User: {{ ssh_user }}"
+          - "SSH Password: {{ ssh_password }}"
+          - "Sudo Password: {{ sudo_password }}"
+
+- name: Execute commands on target hosts
+  hosts: hosts_grp1
+  gather_facts: no
+  vars:
+    ssh_user: "{{ hostvars['localhost']['ssh_user'] }}"
+    ssh_password: "{{ hostvars['localhost']['ssh_password'] }}"
+  tasks:
+    - name: Debug SSH user and password
+      debug:
+        msg:
+          - "SSH User: {{ ssh_user }}"
+          - "SSH Password: {{ ssh_password }}"
+
+    - name: Run a simple command (e.g., pwd)
+      ansible.builtin.command:
+        cmd: pwd
+      vars:
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_pass: "{{ ssh_password }}"
+      register: pwd_result
+
+    - name: Display the pwd command output
+      ansible.builtin.debug:
+        msg: "The output of the command is: {{ pwd_result.stdout }}"
